@@ -1,94 +1,64 @@
+const Book = require('../models/Book'); // Adjust path as needed
 
-const Book = require('../models/Book');
+// Create a new book
+exports.createBook = async (req, res) => {
+  try {
+    const newBook = new Book(req.body);
+    await newBook.save();
+    res.status(201).json({ message: 'Book created successfully', data: newBook });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
 
-// GET all books
-const getAllBooks = async (req, res) => {
+// Get all books
+exports.getBooks = async (req, res) => {
   try {
     const books = await Book.find();
-    if (books.length === 0) {
-      return res.status(404).json({ error: 'No books found' });
-    }
-    res.json(books);
+    res.status(200).json(books);
   } catch (err) {
-    console.error('Error retrieving books:', err);
-    res.status(500).json({ error: 'Failed to retrieve books' });
+    res.status(500).json({ error: err.message });
   }
 };
 
-// GET a book by ID
-const getBookById = async (req, res) => {
-  const { id } = req.params;
+// Get a single book by ID
+exports.getBookById = async (req, res) => {
   try {
-    const book = await Book.findById(id);
+    const book = await Book.findById(req.params.id);
     if (!book) {
-      return res.status(404).json({ error: `Book with ID ${id} not found` });
+      return res.status(404).json({ message: 'Book not found' });
     }
-    res.json(book);
+    res.status(200).json(book);
   } catch (err) {
-    console.error(`Error retrieving book with ID ${id}:`, err);
-    res.status(500).json({ error: 'Failed to retrieve book' });
+    res.status(500).json({ error: err.message });
   }
 };
 
-// POST a new book
-const addBook = async (req, res) => {
-  const { title, author, genre, year } = req.body;
-
-  // Basic validation for required fields
-  if (!title || !author || !genre || !year) {
-    return res.status(400).json({ error: 'All fields (title, author, genre, year) are required' });
-  }
-
+// Update a book by ID
+exports.updateBook = async (req, res) => {
   try {
-    const newBook = await Book.create(req.body);
-    res.status(201).json(newBook);
-  } catch (err) {
-    console.error('Error adding new book:', err);
-    res.status(500).json({ error: 'Failed to add book' });
-  }
-};
-
-// PUT (update) a book by ID
-const updateBook = async (req, res) => {
-  const { id } = req.params;
-  const updateData = req.body;
-
-  // Optional: Basic validation for fields to update
-  if (Object.keys(updateData).length === 0) {
-    return res.status(400).json({ error: 'No data provided to update' });
-  }
-
-  try {
-    const updatedBook = await Book.findByIdAndUpdate(id, updateData, { new: true });
+    const updatedBook = await Book.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
     if (!updatedBook) {
-      return res.status(404).json({ error: `Book with ID ${id} not found` });
+      return res.status(404).json({ message: 'Book not found' });
     }
-    res.json(updatedBook);
+    res.status(200).json({ message: 'Book updated successfully', data: updatedBook });
   } catch (err) {
-    console.error(`Error updating book with ID ${id}:`, err);
-    res.status(500).json({ error: 'Failed to update book' });
+    res.status(400).json({ error: err.message });
   }
 };
 
-// DELETE a book by ID
-const deleteBook = async (req, res) => {
-  const { id } = req.params;
+// Delete a book by ID
+exports.deleteBook = async (req, res) => {
   try {
-    const deletedBook = await Book.findByIdAndRemove(id);
+    const deletedBook = await Book.findByIdAndDelete(req.params.id);
     if (!deletedBook) {
-      return res.status(404).json({ error: `Book with ID ${id} not found` });
+      return res.status(404).json({ message: 'Book not found' });
     }
-    res.json({ message: 'Book deleted successfully' });
+    res.status(200).json({ message: 'Book deleted successfully' });
   } catch (err) {
-    console.error(`Error deleting book with ID ${id}:`, err);
-    res.status(500).json({ error: 'Failed to delete book' });
+    res.status(500).json({ error: err.message });
   }
-};
-
-module.exports = {
-  getAllBooks,
-  getBookById,
-  addBook,
-  updateBook,
-  deleteBook,
 };

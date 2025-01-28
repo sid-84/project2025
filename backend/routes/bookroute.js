@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const bookController = require('../../controllers/controller'); // Adjust path as needed
+const bookController = require('../controllers/bookcontroller.js'); // Adjust path as needed
 
 
 router.post('/', bookController.createBook);

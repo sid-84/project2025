@@ -7,7 +7,7 @@ dotenv.config();
 const connectDB = async () => {
   try {
     mongoose.set("strictQuery", true);
-    await mongoose.connect(process.env.ATLAS_URL, {
+    await mongoose.connect(process.env.API_URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });

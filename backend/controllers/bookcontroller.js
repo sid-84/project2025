@@ -1,4 +1,4 @@
-const Book = require('../models/Book'); // Adjust path as needed
+const Book = require('../models/bookmodel.js'); // Adjust path as needed
 
 // Create a new book
 exports.createBook = async (req, res) => {

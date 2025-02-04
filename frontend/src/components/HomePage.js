@@ -35,7 +35,7 @@ const HomePage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get('/api/books')
+    axios.get('https://3000-sid84-project2025-ukaoqudzkab.ws-us117.gitpod.io/api/books')
       .then(res => {
         const books = res.data;
         const uniqueAuthors = new Set(books.map(book => book.author)).size;

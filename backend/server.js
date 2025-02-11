@@ -27,17 +27,15 @@ app.get("/home", (req, res) => {
 // SERVE STATIC FILES IN PRODUCTION
 if (process.env.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, "./client/build")));
-    app.get("/*", (req, res) => {
-        res.sendFile(
-            path.join(__dirname, "./client/build/index.html"),
-            (err) => {
-                if (err) {
-                    console.error(err);
-                    res.status(500).send("An error occurred while serving the file.");
-                }
-            }
-        );
-    });
+    app.get('/api/books', async (req, res) => {
+        try {
+          const books = await Book.find(); // Fetch all books from MongoDB
+          res.json(books);
+        } catch (error) {
+          res.status(500).json({ error: 'Server error' });
+        }
+      });
+      
 }
 
 // HANDLE UNMATCHED API ROUTES

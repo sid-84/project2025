@@ -17,7 +17,7 @@ const ExportPage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get('/api/books')
+    axios.get('https://5000-sid84-project2025-ukaoqudzkab.ws-us117.gitpod.io/api/books')
       .then(res => {
         setBooks(res.data);
         setLoading(false);

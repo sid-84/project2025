@@ -13,7 +13,7 @@ function ShowBookList() {
 
   useEffect(() => {
     axios
-      .get(`/api/books`)
+      .get(`https://5000-sid84-project2025-ukaoqudzkab.ws-us117.gitpod.io/api/books`)
       .then((res) => {
         setBooks(res.data);
         setLoading(false); // Set loading to false once data is fetched

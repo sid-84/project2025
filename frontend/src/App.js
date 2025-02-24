@@ -9,14 +9,14 @@ import rosePineTheme from './theme/rosepine';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import CreateBook from './components/CreateBook';
-// import ShowBookList from './components/ShowBookList';
-// import ShowBookDetails from './components/ShowBookDetails';
-// import UpdateBookInfo from './components/UpdateBookInfo';
+import ShowBookList from './components/ShowBookList';
+import ShowBookDetails from './components/ShowBookDetail.js';
+import UpdateBookInfo from './components/UpdateBookInfo';
 import HomePage from './components/HomePage';
 // import NotesPage from './components/NotesPage'; // Import NotesPage component
 // import ExportPage from './components/ExportPage';
 // import QRCodePage from './components/QRCodePage';
-// import SearchBooks from './components/SearchBooks';
+import SearchBooks from './components/SearchBook.js';
 
 const App = () => {
   return (
@@ -28,14 +28,15 @@ const App = () => {
           <Box component="main" flexGrow={1} py={3}>
             <Routes>
               <Route exact path='/' element={<HomePage />} />
-              {/* <Route path='/book-list' element={<ShowBookList />} /> */}
+              <Route path='/book-list' element={<ShowBookList />} />
               <Route path='/create-book' element={<CreateBook />} />
-              {/* <Route path='/edit-book/:id' element={<UpdateBookInfo />} /> */}
-              {/* <Route path='/show-book/:id' element={<ShowBookDetails />} /> */}
+              <Route path='/show-book/:id' element={<ShowBookDetails />} />
+              <Route path='/edit-book/:id' element={<UpdateBookInfo />} />
+            
               {/* <Route path='/notes/*' element={<NotesPage />} /> */}
               {/* <Route path="/export" element={<ExportPage />} /> */}
               {/* <Route path="/qr-codes" element={<QRCodePage />} /> */}
-              {/* <Route path="/search" element={<SearchBooks />} /> */}
+              <Route path="/search" element={<SearchBooks />} />
             </Routes>
           </Box>
           <Footer />

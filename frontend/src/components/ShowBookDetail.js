@@ -35,7 +35,7 @@ const ShowBookDetails = () => {
 
   useEffect(() => {
     axios
-      .get(`/api/books/${id}`)
+      .get(`https://5000-sid84-project2025-ukaoqudzkab.ws-us117.gitpod.io/api/books/${id}`)
       .then((res) => {
         setBook(res.data);
       })
